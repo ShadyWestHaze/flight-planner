@@ -1,11 +1,22 @@
 package io.codelex.flightplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
+@Entity
 public class Airport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotNull
     @NotBlank
     @JsonProperty("country")
@@ -21,39 +32,26 @@ public class Airport {
     @JsonProperty("airport")
     public String airport;
 
-    public Airport(@NotNull @NotBlank String airport, @NotNull @NotBlank String country, @NotNull @NotBlank String city) {
-        this.airport = airport;
-        this.country = country;
-        this.city = city;
-        validateFields();
+
+    public Airport() {}
+
+    @JsonIgnore
+    public Long getId() {
+        return id;
     }
 
-    private void validateFields() {
-        if (airport == null || airport.isBlank()) {
-            throw new IllegalArgumentException("Airport name cannot be null or empty.");
-        }
-        if (country == null || country.isBlank()) {
-            throw new IllegalArgumentException("Country cannot be null or empty.");
-        }
-        if (city == null || city.isBlank()) {
-            throw new IllegalArgumentException("City cannot be null or empty.");
-        }
-    }
     public String getCountry() {
         return country;
     }
-    public void setCountry(String country) {
-        this.country = country;
-    }
+
     public String getCity() {
         return city;
     }
-    public void setCity(String city) {
-        this.city = city;
-    }
+
     public String getAirport() {
         return this.airport;
     }
+
     public void setAirport(String airport) {
         this.airport = airport;
     }
@@ -61,8 +59,10 @@ public class Airport {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Airport airport1)) return false;
-        return Objects.equals(getCountry(), airport1.getCountry()) && Objects.equals(getCity(), airport1.getCity()) && Objects.equals(getAirport(), airport1.getAirport());
+        if (!(o instanceof Airport airport)) return false;
+        return Objects.equals(getCountry(), airport.getCountry()) &&
+                Objects.equals(getCity(), airport.getCity()) &&
+                Objects.equals(getAirport(), airport.getAirport());
     }
 
     @Override

@@ -17,15 +17,13 @@ import java.util.List;
 public class FlightController {
 
     private final FlightService flightService;
-
-
     public FlightController(FlightService flightService) {
         this.flightService = flightService;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/admin-api/flights/{flightId}")
-    public Flight getFlightDetails(@PathVariable("flightId") int flightId) {
+    public Flight getFlightDetails(@PathVariable("flightId") Long flightId) {
         Flight flight = flightService.getFlightById(flightId);
         if (flight == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -35,7 +33,7 @@ public class FlightController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/flights/{flightID}")
-    public Flight getFlightDetailsForApi(@PathVariable("flightID") int flightID) {
+    public Flight getFlightDetailsForApi(@PathVariable("flightID") Long flightID) {
         return getFlightDetails(flightID);
     }
 
@@ -47,10 +45,9 @@ public class FlightController {
         return flight;
     }
 
-
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/admin-api/flights/{flightId}")
-    public void deleteFlight(@PathVariable("flightId") int flightId) {
+    public void deleteFlight(@PathVariable("flightId") Long flightId) {
         flightService.deleteFlight(flightId);
     }
 

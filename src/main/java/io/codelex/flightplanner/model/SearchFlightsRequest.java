@@ -23,24 +23,13 @@ public class SearchFlightsRequest {
         return from;
     }
 
-    public void setFrom(@NotNull String from) {
-        this.from = from;
-    }
-
     public @NotNull String getTo() {
         return to;
-    }
-
-    public void setTo(@NotNull String to) {
-        this.to = to;
     }
 
     public @NotNull String getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(@NotNull String departureDate) {
-        this.departureDate = departureDate;
-    }
 }
 

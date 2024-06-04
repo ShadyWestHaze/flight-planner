@@ -9,17 +9,17 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class FlightRepository {
+public class FlightInMemoryRepository {
 
-    private final Map<Integer, Flight> flights = new HashMap<>();
-    private int nextId = 1;
+    private final Map<Long, Flight> flights = new HashMap<>();
+    private Long nextId = 1L;
 
-    public synchronized Flight findById(int id) {
+    public synchronized Flight findById(Long id) {
         return flights.get(id);
     }
 
-    public synchronized Flight save(Flight flight){
-        int id = getNextId();
+    public synchronized Flight save(Flight flight) {
+        Long id = getNextId();
         flight.setId(id);
         flights.put(id, flight);
         return flight;
@@ -29,16 +29,16 @@ public class FlightRepository {
         return new ArrayList<>(flights.values());
     }
 
-    public synchronized void deleteById(int id) {
+    public synchronized void deleteById(Long id) {
         flights.remove(id);
     }
 
-    public synchronized int getNextId() {
+    public synchronized Long getNextId() {
         return nextId++;
     }
 
     public synchronized void clearAll() {
         flights.clear();
-        nextId = 1;
+        nextId = 1L;
     }
 }

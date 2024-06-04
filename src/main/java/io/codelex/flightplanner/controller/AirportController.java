@@ -2,28 +2,24 @@ package io.codelex.flightplanner.controller;
 
 import io.codelex.flightplanner.model.Airport;
 import io.codelex.flightplanner.service.AirportService;
-import io.codelex.flightplanner.service.AirportServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class AirportController {
 
-    private final AirportService airportServiceImpl;
+    private final AirportService airportService;
 
-    public AirportController(AirportServiceImpl airportServiceImpl) {
-        this.airportServiceImpl = airportServiceImpl;
+    public AirportController(AirportService airportService) {
+        this.airportService = airportService;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/airports")
-    public List<Airport> searchAirports(@RequestParam String search) {
-        return airportServiceImpl.searchAirports(search);
+    public List<Airport> searchAirports(@Valid @RequestParam String search) {
+        return airportService.searchAirports(search);
     }
 }

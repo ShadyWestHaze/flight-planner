@@ -2,24 +2,24 @@ package io.codelex.flightplanner.service;
 
 import io.codelex.flightplanner.model.Airport;
 import io.codelex.flightplanner.model.Flight;
-import io.codelex.flightplanner.repository.FlightRepository;
+import io.codelex.flightplanner.repository.FlightInMemoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class AirportServiceImpl implements AirportService {
 
-    private final FlightRepository flightRepository;
+public class AirportInMemoryService implements AirportService {
 
-    @Autowired
-    public AirportServiceImpl(FlightRepository flightRepository) {
-        this.flightRepository = flightRepository;
+    private final FlightInMemoryRepository flightInMemoryRepository;
+
+
+    public AirportInMemoryService(FlightInMemoryRepository flightInMemoryRepository) {
+        this.flightInMemoryRepository = flightInMemoryRepository;
     }
 
     public List<Airport> searchAirports(String search) {
-        List<Flight> flights = flightRepository.findAll();
+        List<Flight> flights = flightInMemoryRepository.findAll();
         List<Airport> matchingAirports = new ArrayList<>();
         String normalizedSearch = search.toLowerCase().trim();
 
@@ -37,7 +37,6 @@ public class AirportServiceImpl implements AirportService {
 
         return matchingAirports;
     }
-
 
     private boolean matches(Airport airport, String search) {
         return airport.getAirport().toLowerCase().contains(search) ||
